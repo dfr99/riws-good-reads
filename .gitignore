@@ -1,2 +1,5 @@
 # Github Runner folder
 actions-runner
+
+# Python cache
+__pycache__
