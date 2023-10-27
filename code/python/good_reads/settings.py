@@ -12,12 +12,12 @@ SPIDER_MODULES = ["good_reads.spiders"]
 NEWSPIDER_MODULE = "good_reads.spiders"
 
 ITEM_PIPELINES = {
-	"good_reads.pipelines.GoodReadsPipeline": 300
+    "pipelines.GoodReadsPipeline": 300
 }
 
-DOWNLOADER_MIDDLEWARES = {
-    "good_reads.middlewares.RotateUserAgentMiddleware": 543,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#     "middlewares.RotateUserAgentMiddleware": 543,
+# }
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -38,7 +38,7 @@ USER_AGENT_LIST = [
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (1)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (2)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (3)',
-    'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (4)'
+    'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (4)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (5)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (6)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (7)',
@@ -46,3 +46,5 @@ USER_AGENT_LIST = [
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (9)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (10)'
 ]
+
+TELNETCONSOLE_ENABLED = False
