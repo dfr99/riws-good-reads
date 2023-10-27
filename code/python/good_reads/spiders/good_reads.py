@@ -7,8 +7,8 @@ from scrapy.linkextractors import LinkExtractor
 from good_reads.items import BookItem
 
 
-class TestBookSpider(CrawlSpider):
-    name = "test"
+class BookSpider(CrawlSpider):
+    name = "good_reads"
     allowed_domains = ["goodreads.com"]
     start_urls = ["https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels"]
     rules = (Rule(LinkExtractor(allow="/book/show/.*"), callback="parse_book_details"), )
@@ -17,7 +17,7 @@ class TestBookSpider(CrawlSpider):
     def _extract_item(response: Response) -> BookItem:
         item = BookItem()
         soup = BeautifulSoup(response.text, 'lxml')
-        title = soup.find('span', itemprop='name').get_text(strip=True)
+        title = soup.find('h1', itemprop='bookTitle').get_text(strip=True)
         # Título
         item['title'] = response.css('span[itemprop="name"]::text').get().strip()
         # Autor
@@ -46,10 +46,11 @@ class TestBookSpider(CrawlSpider):
 
     def parse_book_details(self, response: Response):
         # Extraer los libros de la lista
-        book_rows = response.css('tr[itemtype="http://schema.org/Book"]')
+        #book_rows = response.css('tr[itemtype="http://schema.org/Book"]')
 
-        for row in book_rows:
-            book_link = row.css('a.bookTitle::attr(href)').get()
-            if book_link:
-                item = self._extract_item(response)
-                yield item
+        #for row in book_rows:
+        #book_link = response.css('a.bookTitle::attr(href)').get()
+        #book_link = response.url
+        #if book_link:
+        item = self._extract_item(response)
+        yield item
