@@ -17,7 +17,9 @@ class BookSpider(CrawlSpider):
     def _extract_item(response: Response) -> BookItem:
         item = BookItem()
         soup = BeautifulSoup(response.text, 'lxml')
-        title = soup.find('h1', itemprop='bookTitle').get_text(strip=True)
+        title = soup.find('h1', {'class': 'Text__title1'}).text
+        author =soup.find('span', {'class': 'ContributorLink__name'}).text
+        ratings = soup.find('div', itemprop='RatingStatistics__rating').get_text(strip=True)
         # Título
         item['title'] = response.css('span[itemprop="name"]::text').get().strip()
         # Autor
