@@ -7,17 +7,21 @@
 #
 # https://docs.scrapy.org/en/latest/topics/settings.html
 
-BOT_NAME = "good_reads"
-SPIDER_MODULES = ["good_reads.spiders"]
-NEWSPIDER_MODULE = "good_reads.spiders"
+BOT_NAME = 'good_reads'
+SPIDER_MODULES = ['good_reads.spiders']
+NEWSPIDER_MODULE = 'good_reads.spiders'
+REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 
 ITEM_PIPELINES = {
-    "pipelines.GoodReadsPipeline": 300
+    'good_reads.pipelines.GoodReadsPipeline': 300
 }
 
-# DOWNLOADER_MIDDLEWARES = {
-#     "middlewares.RotateUserAgentMiddleware": 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    # 'middlewares.RotateUserAgentMiddleware': 543,
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -48,3 +52,14 @@ USER_AGENT_LIST = [
 ]
 
 TELNETCONSOLE_ENABLED = False
+
+
+SPLASH_URL = 'http://localhost:8050'
+
+# Enable Splash Deduplicate Args Filter
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
+
+# Define the Splash DupeFilter
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
