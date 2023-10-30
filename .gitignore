@@ -4,6 +4,7 @@ actions-runner
 # Python cache
 __pycache__
 
-
 *env*
 *.idea*
+
+*.json
