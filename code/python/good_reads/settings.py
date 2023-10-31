@@ -17,7 +17,8 @@ ITEM_PIPELINES = {
 }
 
 DOWNLOADER_MIDDLEWARES = {
-    # 'middlewares.RotateUserAgentMiddleware': 543,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
@@ -37,8 +38,7 @@ DOWNLOAD_DELAY = 2.0
 CONCURRENT_REQUESTS_PER_DOMAIN = 10
 CLOSESPIDER_ITEMCOUNT = 1000
 
-USER_AGENT_CYCLING_INTERVAL = 5
-USER_AGENT_LIST = [
+USER_AGENTS = [
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (1)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (2)',
     'RIWS-MUEI-FIC-UDC Scrapy Bot - Course Assigment (3)',
