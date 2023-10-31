@@ -1,12 +1,13 @@
+"""
+Scrapy settings for good_reads project
+
+For simplicity, this file contains only settings considered important or
+commonly used. You can find more settings consulting the documentation:
+
+https://docs.scrapy.org/en/latest/topics/settings.html
+"""
+
 # -*- coding: utf-8 -*-
-
-# Scrapy settings for good_reads project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-# https://docs.scrapy.org/en/latest/topics/settings.html
-
 BOT_NAME = 'good_reads'
 SPIDER_MODULES = ['good_reads.spiders']
 NEWSPIDER_MODULE = 'good_reads.spiders'
@@ -52,7 +53,6 @@ USER_AGENTS = [
 ]
 
 TELNETCONSOLE_ENABLED = False
-
 
 SPLASH_URL = 'http://localhost:8050'
 
