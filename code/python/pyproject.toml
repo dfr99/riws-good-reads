@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "riws-good-reads"
-version = "0.1.0"
+version = "1.0.0"
 description = "Práctica de web scraping de RIWS 2023"
 authors = ["David Fraga Rodríguez <david.fraga.rodriguez@udc.es>", "María Rey Escobar <maria.rescobar@udc.es>"]
 license = "MIT"
