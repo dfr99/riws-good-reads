@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "riws-good-reads"
+name = "good_reads"
 version = "1.0.0"
 description = "Práctica de web scraping de RIWS 2023"
 authors = ["David Fraga Rodríguez <david.fraga.rodriguez@udc.es>", "María Rey Escobar <maria.rescobar@udc.es>"]
@@ -18,8 +18,7 @@ scrapy-useragents = "^0.0.1"
 [tool.poetry.scripts]
 lint = "commands:lint"
 fmt = "commands:format_code"
-gen_docs = "commands:generate_docs"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
