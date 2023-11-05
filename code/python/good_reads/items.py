@@ -8,6 +8,7 @@ https://docs.scrapy.org/en/latest/topics/items.html
 # -*- coding: utf-8 -*-
 import scrapy
 
+
 class BookItem(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()

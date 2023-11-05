@@ -5,9 +5,12 @@ from shutil import which
 
 
 def lint():
-    """Run linters."""
-    _black_lint()
-    _pylint()
+    """Run Black as linter."""
+    print("====| LINT: RUNNING BLACK")
+    if which("black"):
+        sp.check_call("black --check .", shell=True)
+    else:
+        _missing_command("black")
 
 
 def format_code():
@@ -24,22 +27,13 @@ def format_code():
         _missing_command("black")
 
 
-def _black_lint():
-    """Run Black as linter."""
-    print("====| LINT: RUNNING BLACK")
-    if which("black"):
-        sp.check_call("black --check bulk_elastic.py ./good_reads", shell=True)
+def run_scrapy():
+    """Launch scrapy command."""
+    print("====| EXECUTE: SCRAPY CRAWL")
+    if which("scrapy"):
+        sp.check_call("scrapy crawl good_reads", shell=True)
     else:
-        _missing_command("black")
-
-
-def _pylint():
-    """Run Pylint as linter."""
-    print("====| LINT: RUNNING PYLINT")
-    if which("pylint"):
-        sp.check_call("pylint bulk_elastic.py ./good_reads", shell=True)
-    else:
-        _missing_command("pylint")
+        _missing_command("scrapy")
 
 
 def _missing_command(command):

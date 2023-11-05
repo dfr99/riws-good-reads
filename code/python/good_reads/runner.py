@@ -6,12 +6,6 @@ Define your execution for crawling here
 from scrapy.cmdline import execute
 
 try:
-    execute (
-        [
-            "scrapy",
-            "crawl",
-            "good_reads"
-        ]
-    )
+    execute(["scrapy", "crawl", "good_reads"])
 except SystemExit:
     pass
