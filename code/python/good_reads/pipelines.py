@@ -15,7 +15,7 @@ class GoodReadsPipeline:
 
     def close_spider(self, spider):
         with open("./data/" + spider.name + ".json", "w", encoding="utf-8") as outfile:
-            json.dump(self.listItem, outfile)
+            json.dump(self.listItem, outfile, default=str)
 
     def process_item(self, item, spider):
         self.listItem.append(dict(item))

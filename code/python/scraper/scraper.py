@@ -8,33 +8,35 @@ from bs4 import BeautifulSoup
 # -*- coding: utf-8 -*-
 from dateutil import parser
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException
+from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def extract_data(url):
     driver = webdriver.Chrome()
     driver.get(url)
 
-    try:
-        driver.find_element(
-            By.CSS_SELECTOR, '[aria-label="Show all items in the list"]'
-        ).click()
-    except (NoSuchElementException, ElementNotInteractableException):
-        print("Button for genres not found on this page: " + url)
+    # try:
+    #     WebDriverWait(driver, 10).until(
+    #         EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Show all items in the list"]'))
+    #     ).click()
+    # except (NoSuchElementException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException):
+    #     print("Button for genres not found on this page: " + url)
 
     try:
-        driver.find_element(
-            By.CSS_SELECTOR, '[aria-label="Tap to show more book description"]'
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Tap to show more book description"]'))
         ).click()
-    except (NoSuchElementException, ElementNotInteractableException):
+    except (NoSuchElementException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException):
         print("Button to expand summary not found on this page: " + url)
 
     try:
-        driver.find_element(
-            By.CSS_SELECTOR, '[aria-label="Book details and editions"]'
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Book details and editions"]'))
         ).click()
-    except (NoSuchElementException, ElementNotInteractableException):
+    except (NoSuchElementException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException):
         print("Button to expand book details not found on this page: " + url)
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
