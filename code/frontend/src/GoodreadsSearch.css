@@ -1,0 +1,61 @@
+.toolbar {
+    background-color: #0074d9;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center; 
+  }
+  
+  .toolbar input {
+    background-color: white;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .toolbar input::placeholder {
+    color: black;
+  }
+
+  .title {
+    color: white;
+    font-weight: bold; 
+    margin-right: 30%; 
+    margin-left: 5%;
+  }
+
+  .star-icon {
+    background-color: transparent;
+    color: white; 
+    font-size: 25px; 
+    margin-left: 10%;
+    margin-bottom: 3%;
+   
+  }
+  .rating-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; 
+
+  }
+  .filter-button {
+    background-color: transparent;
+    border: none;
+    margin-left: 1%;
+    margin-right: 0.2%;
+  }
+  .calendar-icon {
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+    margin-left: 10%;
+  }
+  .date-range-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
