@@ -43,5 +43,6 @@ class BookSpider(CrawlSpider):
 
     def parse_book_details(self, response: Response):
         self.logger.info("Scraping %s...", response.url)
+        self.logger.info("User-Agent for this request: %s", response.request.headers['User-Agent'])
         item = self._extract_item(response.url)
         yield item
