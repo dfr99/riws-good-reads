@@ -11,24 +11,27 @@ sudo apt-get update && sudo apt-get install -y elasticsearch
 which python
 python -V
 
-## Run good_reads crawler
-cd ../code/python
-poetry run crawl
-
-## Generate request body for bulk data on Elastic index
-cd data
-python bulk_elastic.py
-
 ## Start Elasticsearch
 sudo systemctl daemon-reload
 sudo systemctl start elasticsearch
 sudo systemctl enable elasticsearch
 
 ## Remove security for ElasticSearch
-sudo sed -i -e 's/xpack.security.enabled:\ true/xpack.security.enabled:\ false/g' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i -e 's/xpack.security.enabled:\ np,e/xpack.security.enabled:\ false/g' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i -e 's/xpack.security.enrollment.enabled:\ true/xpack.security.enrollment.enabled:\ false/g' /etc/elasticsearch/elasticsearch.yml
 
 sudo systemctl restart elasticsearch
 
-## Check if Elastic server is up
+## Check if Elasticsearch server is up
 curl -X GET 'http://localhost:9200'
+
+## Create Elasticsearch Index
+curl -X PUT "localhost:9200/good_reads?pretty"
+
+## Run good_reads crawler
+cd ../code/backend
+poetry run crawl
+
+## Generate request body for bulk data on Elastic index
+# cd data
+# python bulk_elastic.py

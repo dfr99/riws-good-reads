@@ -8,8 +8,15 @@ See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # -*- coding: utf-8 -*-
 import json
 
+from elasticsearch import Elasticsearch
+from scrapy.exporters import JsonLinesItemExporter
+
 
 class GoodReadsPipeline:
+    def __init__(self):
+        self.es = Elasticsearch(hosts=["https://localhost:9200"])
+        self.index_name = "good_reads"
+
     def open_spider(self, spider):
         self.listItem = []
 
@@ -19,4 +26,5 @@ class GoodReadsPipeline:
 
     def process_item(self, item, spider):
         self.listItem.append(dict(item))
+        self.es.index(index=self.index_name, body=dict(item))
         return item
