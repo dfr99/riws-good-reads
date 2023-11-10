@@ -20,8 +20,7 @@ const GoodreadsSearch = () => {
     const [showDateFilter, setDateFilter] = useState(false);
     return (
         <ReactiveBase
-            app="riws_good_reads"
-            //credentials="" 
+            app="good_reads"
             url="http://localhost:9200"
         >
             <div>
@@ -84,7 +83,7 @@ const GoodreadsSearch = () => {
                 dataField="title"
                 size={10}
                 pagination={true}
-                react={{ "and": ["textSearch", "ratingsList"] }}
+                react={{ "and": ["textSearch", "ratingFilter", "dateRange"] }}
                 renderResultStats={(stats) => (
                     <div>{stats.numberOfResults} resultados encontrados</div>
                 )}

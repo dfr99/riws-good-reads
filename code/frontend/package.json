@@ -1,0 +1,38 @@
+{
+  "name": "riws_good_reads",
+  "version": "1.0.0",
+  "homepage": "/riws-good-reads/",
+  "private": true,
+  "dependencies": {
+    "@appbaseio/reactivesearch": "3.45.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "bootstrap": "^5.1.1",
+    "date-fns": "^2.28.0",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-intl": "^5.20.12",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
