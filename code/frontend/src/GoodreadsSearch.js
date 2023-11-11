@@ -24,39 +24,39 @@ const handleToggleFilter = (componentId, value) => {
     const updatedSelected = currentSelected === value ? null : value;
 
     ReactiveBase.updateComponent(componentId, {
-      defaultSelected: updatedSelected,
+        defaultSelected: updatedSelected,
     });
     ReactiveBase.triggerDefaultQuery();
-  };
+};
 
-  const CustomResultCard = ({ data }) => (
+const CustomResultCard = ({ data }) => (
     <div className="custom-result-card">
-       <div className="cover-image-container">
-      <div
-        className="cover-image"
-        style={{ backgroundImage: `url(${data.cover_page})` }}
-      ></div>
+        <div className="cover-image-container">
+            <div
+                className="cover-image"
+                style={{ backgroundImage: `url(${data.cover_page})` }}
+            ></div>
+        </div>
+        <div className="card-content">
+            <ResultCard.Title>
+                <div dangerouslySetInnerHTML={{ __html: data.title }} />
+            </ResultCard.Title>
+            <ResultCard.Description>
+                <div>
+                    Autor/a: {data.author} <br />
+                    Puntuación media: {parseFloat(data.number_of_pages)} <br />
+                    Fecha de publicación: {formatDate(data.release_date)} <br />
+                    Sinopsis: {data.summary} <br />
+                    Géneros: {data.genres.join(", ")} <br />
+                    Número de páginas: {parseInt(data.number_of_pages)} <br />
+                    ISBN: {data.isbn} <br />
+                    Idioma: {data.language}
+                </div>
+            </ResultCard.Description>
+        </div>
     </div>
-      <div className="card-content">
-        <ResultCard.Title>
-          <div dangerouslySetInnerHTML={{ __html: data.title }} />
-        </ResultCard.Title>
-        <ResultCard.Description>
-          <div>
-            Autor/a: {data.author} <br />
-            Puntuación media: {parseFloat(data.number_of_pages)} <br />
-            Fecha de publicación: {formatDate(data.release_date)} <br />
-            Sinopsis: {data.summary} <br />
-            Géneros: {data.genres.join(", ")} <br /> 
-            Número de páginas: {parseInt(data.number_of_pages)} <br />
-            ISBN: {data.isbn} <br />
-            Idioma: {data.language}
-          </div>
-        </ResultCard.Description>
-      </div>
-    </div>
-  );
-  
+);
+
 
 const GoodreadsSearch = () => {
     return (
@@ -110,15 +110,15 @@ const GoodreadsSearch = () => {
                             ]}
                             URLParams={true}
                             showFilter={true}
-                            defaultSelected={null} 
+                            defaultSelected={null}
                             renderItem={(label, count, isSelected) => (
-                              <div
-                                key={label}
-                                onClick={() => handleToggleFilter("pagesFilter", label)}
-                                className={`option ${isSelected ? "selected" : ""}`}
-                              >
-                                {label}
-                              </div>
+                                <div
+                                    key={label}
+                                    onClick={() => handleToggleFilter("pagesFilter", label)}
+                                    className={`option ${isSelected ? "selected" : ""}`}
+                                >
+                                    {label}
+                                </div>
                             )}
                         />
                     </div>
@@ -126,22 +126,32 @@ const GoodreadsSearch = () => {
                         <DateRange
                             componentId="dateRange"
                             dataField="release_date"
-                            title="Fcha de publicación"
+                            title="Fecha de publicación"
                             customQuery={(value, props) => {
                                 const start = value && value.start ? new Date(value.start).toISOString().split('T')[0] : null;
                                 const end = value && value.end ? new Date(value.end).toISOString().split('T')[0] : null;
 
                                 return {
-                                    range: {
-                                        [props.dataField]: {
-                                            gte: start,
-                                            lte: end,
+                                    query: {
+                                        bool: {
+                                            must: [],
+                                            filter: [
+                                                {
+                                                    range: {
+                                                        [props.dataField]: {
+                                                            gte: start,
+                                                            lte: end,
+                                                        },
+                                                    },
+                                                },
+                                            ],
                                         },
                                     },
                                 };
                             }}
                             placeholder={{ start: "Fecha de inicio", end: "Fecha de fin" }}
                         />
+
                     </div>
                 </div>
                 <div className="results-container">
