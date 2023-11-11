@@ -1,61 +1,102 @@
 .toolbar {
-    background-color: #0074d9;
-    padding: 10px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center; 
-  }
-  
-  .toolbar input {
-    background-color: white;
-    border: none;
-    color: black;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .toolbar input::placeholder {
-    color: black;
-  }
+  background-color: #05345e;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
 
-  .title {
-    color: white;
-    font-weight: bold; 
-    margin-right: 30%; 
-    margin-left: 5%;
-  }
+.toolbar input {
+  background-color: white;
+  border: none;
+  color: black;
+  border-radius: 5px;
+  font-size: 16px;
+}
 
-  .star-icon {
-    background-color: transparent;
-    color: white; 
-    font-size: 25px; 
-    margin-left: 10%;
-    margin-bottom: 3%;
-   
-  }
-  .rating-filter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px; 
+.toolbar input::placeholder {
+  color: black;
+}
 
-  }
-  .filter-button {
-    background-color: transparent;
-    border: none;
-    margin-left: 1%;
-    margin-right: 0.2%;
-  }
-  .calendar-icon {
-    background-color: transparent;
-    color: white;
-    font-size: 20px;
-    margin-left: 10%;
-  }
-  .date-range-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+.title {
+  color: white;
+  font-weight: bold;
+  margin-right: 25%;
+  margin-left: 2%;
+}
+
+.text-search {
+  width: 30%;
+  margin-top: 0.5%;
+}
+
+.rating-filter {
+  margin-top: 20px;
+
+}
+
+.date-range-container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 77%;
+}
+.filters-title {
+  font-weight: bold;
+  font-size: 30px;
+}
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 2%;
+}
+
+.rating-filter,
+.pages-filter,
+.date-range-container {
+  margin-top: 10px;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+}
+
+.results-container {
+  width: 100%;
+  margin-top: 2%;
+}
+.custom-result-card {
+  display: flex;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.cover-image-container {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.cover-image {
+  width: 150px; 
+  height: 225px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.custom-result-card .result-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.custom-result-card .result-description {
+  font-size: 14px;
+}
