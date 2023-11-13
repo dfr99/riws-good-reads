@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ReactiveBase,
     DataSearch,
@@ -18,16 +18,6 @@ const formatDate = (dateString) => {
     return formattedDate;
 };
 
-const handleToggleFilter = (componentId, value) => {
-    const currentSelected = ReactiveBase.getComponent(componentId).defaultSelected;
-
-    const updatedSelected = currentSelected === value ? null : value;
-
-    ReactiveBase.updateComponent(componentId, {
-        defaultSelected: updatedSelected,
-    });
-    ReactiveBase.triggerDefaultQuery();
-};
 
 const CustomResultCard = ({ data }) => (
     <div className="custom-result-card">
@@ -86,11 +76,13 @@ const GoodreadsSearch = () => {
                             componentId="ratingFilter"
                             dataField="average_rating"
                             title="Puntuación media"
+                            defaultValue='Cualquier puntuación'
                             data={[
                                 { label: "1 - 2 ⭐", start: 1, end: 2 },
                                 { label: "2 - 3 ⭐", start: 2, end: 3 },
                                 { label: "3 - 4 ⭐", start: 3, end: 4 },
                                 { label: "4 - 5 ⭐", start: 4, end: 5 },
+                                { label: "Cualquier puntuación", start: 0, end: 5 },
                             ]}
                             URLParams={true}
                         />
@@ -100,6 +92,7 @@ const GoodreadsSearch = () => {
                             componentId="pagesFilter"
                             dataField="number_of_pages"
                             title="Número de páginas"
+                            defaultValue='Cualquier número de págs'
                             data={[
                                 { label: " < 100", start: 1, end: 100 },
                                 { label: "100 - 300", start: 100, end: 300 },
@@ -107,19 +100,10 @@ const GoodreadsSearch = () => {
                                 { label: "500 - 700", start: 500, end: 700 },
                                 { label: "700 - 1000", start: 700, end: 1000 },
                                 { label: " > 1000", start: 1000, end: 10000 },
+                                { label: "Cualquier número de págs", start: 0, end: 10000 },
                             ]}
                             URLParams={true}
-                            showFilter={true}
-                            defaultSelected={null}
-                            renderItem={(label, count, isSelected) => (
-                                <div
-                                    key={label}
-                                    onClick={() => handleToggleFilter("pagesFilter", label)}
-                                    className={`option ${isSelected ? "selected" : ""}`}
-                                >
-                                    {label}
-                                </div>
-                            )}
+                            style={{ maxHeight: '300px'}}
                         />
                     </div>
                     <div className="date-range-container">
@@ -127,6 +111,7 @@ const GoodreadsSearch = () => {
                             componentId="dateRange"
                             dataField="release_date"
                             title="Fecha de publicación"
+                            URLParams={true}
                             customQuery={(value, props) => {
                                 const start = value && value.start ? new Date(value.start).toISOString().split('T')[0] : null;
                                 const end = value && value.end ? new Date(value.end).toISOString().split('T')[0] : null;
@@ -160,7 +145,7 @@ const GoodreadsSearch = () => {
                         dataField="title"
                         size={3}
                         pagination={true}
-                        react={{ "and": ["textSearch", "ratingFilter", "dateRange"] }}
+                        react={{ "and": ["textSearch", "ratingFilter", "dateRange, pagesFilter"] }}
                         renderResultStats={(stats) => (
                             <div>{stats.numberOfResults} resultados encontrados</div>
                         )}>

@@ -52,11 +52,18 @@
   margin-top: 20px;
   margin-left: 2%;
 }
+.css-1w1pnf0-UL{
+  max-height: 300px !important;
+}
 
+.rating-filter {
+  border-bottom: '4px solid black';
+}
 .rating-filter,
 .pages-filter,
 .date-range-container {
   margin-top: 10px;
+  
 }
 
 .app-container {
