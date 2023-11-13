@@ -32,6 +32,10 @@ curl -X PUT "localhost:9200/good_reads?pretty"
 cd ../code/backend
 poetry run crawl
 
-## Generate request body for bulk data on Elastic index
-# cd data
-# python bulk_elastic.py
+## Run front
+cd ../frontend
+npm install
+npm start
+
+## Check if frontend is up
+curl -X GET 'http://localhost:3000'
