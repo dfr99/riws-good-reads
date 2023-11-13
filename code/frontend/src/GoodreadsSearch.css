@@ -42,28 +42,32 @@
   margin-top: 20px;
   width: 77%;
 }
+
 .filters-title {
   font-weight: bold;
   font-size: 30px;
 }
+
 .filters-container {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
   margin-left: 2%;
 }
-.css-1w1pnf0-UL{
+
+.css-1w1pnf0-UL {
   max-height: 300px !important;
 }
 
 .rating-filter {
   border-bottom: '4px solid black';
 }
+
 .rating-filter,
 .pages-filter,
 .date-range-container {
   margin-top: 10px;
-  
+
 }
 
 .app-container {
@@ -75,12 +79,14 @@
   width: 100%;
   margin-top: 2%;
 }
+
 .custom-result-card {
   display: flex;
   border: 1px solid #ddd;
   margin-bottom: 20px;
   padding: 10px;
   background-color: #f9f9f9;
+  width: 100%;
 }
 
 .cover-image-container {
@@ -89,8 +95,8 @@
 }
 
 .cover-image {
-  width: 150px; 
-  height: 225px;
+  width: 150px;
+  height: 230px;
   background-size: cover;
   background-position: center;
 }

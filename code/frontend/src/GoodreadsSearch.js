@@ -1,10 +1,9 @@
 
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
     ReactiveBase,
     DataSearch,
-    SingleList,
     DateRange,
     ReactiveList,
     ResultCard,
@@ -34,11 +33,11 @@ const CustomResultCard = ({ data }) => (
             <ResultCard.Description>
                 <div>
                     Autor/a: {data.author} <br />
-                    Puntuación media: {parseFloat(data.number_of_pages)} <br />
-                    Fecha de publicación: {formatDate(data.release_date)} <br />
+                    Puntuación media: {data.rating} ⭐ <br />
+                    Fecha de publicación: {data.release_date != "" ? formatDate(data.release_date) : ''} <br />
                     Sinopsis: {data.summary} <br />
                     Géneros: {data.genres.join(", ")} <br />
-                    Número de páginas: {parseInt(data.number_of_pages)} <br />
+                    Número de páginas: {data.number_of_pages} <br />
                     ISBN: {data.isbn} <br />
                     Idioma: {data.language}
                 </div>
@@ -74,15 +73,14 @@ const GoodreadsSearch = () => {
                     <div className="rating-filter">
                         <SingleRange
                             componentId="ratingFilter"
-                            dataField="average_rating"
+                            dataField="rating"
                             title="Puntuación media"
-                            defaultValue='Cualquier puntuación'
                             data={[
-                                { label: "1 - 2 ⭐", start: 1, end: 2 },
-                                { label: "2 - 3 ⭐", start: 2, end: 3 },
-                                { label: "3 - 4 ⭐", start: 3, end: 4 },
-                                { label: "4 - 5 ⭐", start: 4, end: 5 },
-                                { label: "Cualquier puntuación", start: 0, end: 5 },
+                                { label: "1 - 2 ⭐", start: 1.0, end: 2.0 },
+                                { label: "2 - 3 ⭐", start: 2.0, end: 3.0 },
+                                { label: "3 - 4 ⭐", start: 3.0, end: 4.0 },
+                                { label: "4 - 5 ⭐", start: 4.0, end: 5.0 },
+                                { label: "Cualquier puntuación", start: 0.0, end: 5.0 },
                             ]}
                             URLParams={true}
                         />
@@ -92,7 +90,6 @@ const GoodreadsSearch = () => {
                             componentId="pagesFilter"
                             dataField="number_of_pages"
                             title="Número de páginas"
-                            defaultValue='Cualquier número de págs'
                             data={[
                                 { label: " < 100", start: 1, end: 100 },
                                 { label: "100 - 300", start: 100, end: 300 },
@@ -103,7 +100,7 @@ const GoodreadsSearch = () => {
                                 { label: "Cualquier número de págs", start: 0, end: 10000 },
                             ]}
                             URLParams={true}
-                            style={{ maxHeight: '300px'}}
+                            style={{ maxHeight: '300px' }}
                         />
                     </div>
                     <div className="date-range-container">
@@ -145,7 +142,7 @@ const GoodreadsSearch = () => {
                         dataField="title"
                         size={3}
                         pagination={true}
-                        react={{ "and": ["textSearch", "ratingFilter", "dateRange, pagesFilter"] }}
+                        react={{ "and": ["textSearch", "ratingFilter", "dateRange", "pagesFilter"] }}
                         renderResultStats={(stats) => (
                             <div>{stats.numberOfResults} resultados encontrados</div>
                         )}>
