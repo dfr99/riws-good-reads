@@ -4,24 +4,24 @@ Spider code to crawl and scrape Good Reads books data
 
 
 # -*- coding: utf-8 -*-
+import os
+from dotenv import load_dotenv
 
-from scrapy.http import Response
+from scrapy.http import Response, Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-import scraper.scraper as scraper
+from scraper import scraper
 from good_reads.items import BookItem
 
+load_dotenv()
 
 class BookSpider(CrawlSpider):
     name = "good_reads"
     allowed_domains = ["goodreads.com"]
     start_urls = [
-        "https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels"
+        os.getenv("GOOD_READS_LIST")
     ]
-    for i in range(2, 12):
-        page = "?page=" + str(i)
-        start_urls.append(start_urls[0] + page)
     rules = (Rule(LinkExtractor(allow="/book/show/.*"), callback="parse_book_details"),)
 
     @staticmethod
@@ -41,10 +41,16 @@ class BookSpider(CrawlSpider):
 
         return item
 
+
     def parse_book_details(self, response: Response):
         self.logger.info("Scraping %s...", response.url)
         self.logger.info(
             "User-Agent for this request: %s", response.request.headers["User-Agent"]
         )
-        item = self._extract_item(response.url)
-        yield item
+        # item = self._extract_item(response.url)
+        next_page_number = response.css('ul.pagination li.current + li a::text').extract_first()
+        print(next_page_number)
+        # if next_page_number:
+        #     next_page_url = f'http://example.com/page/{next_page_number}'
+        #     yield Request(url=next_page_url, callback=self.parse)
+        # yield item
