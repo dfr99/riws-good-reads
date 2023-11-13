@@ -55,17 +55,22 @@ def extract_data(url):
 
     title = ""
     author = ""
-    rating = ""
+    rating = 0.0
     summary = ""
     genres = []
-    number_of_pages = ""
+    number_of_pages = 0
     release_date = ""
     isbn = ""
     language = ""
 
     title = soup.find("h1", {"class": "Text__title1"}).text
     author = soup.find("span", {"class": "ContributorLink__name"}).text
-    rating = float(soup.find("div", {"class": "RatingStatistics__rating"}).text)
+
+    try:
+        rating = float(soup.find("div", {"class": "RatingStatistics__rating"}).text)
+    except ValueError:
+        print("Cannot retrieve book rating")
+
     summary = soup.find(
         "div", {"class": "DetailsLayoutRightParagraph__widthConstrained"}
     ).text.replace("\n", " ")
@@ -79,22 +84,28 @@ def extract_data(url):
     for item in soup.find_all("div", {"class": "DescListItem"})[-4:]:
         selector = item.find("dt").text
         if selector == "Format":
-            number_of_pages = int(
-                (
-                    item.find("div", {"class": "TruncatedContent"})
-                    .find("div", {"data-testid": "contentContainer"})
-                    .text.split(",")[0]
-                    .split(" ")[0]
+            try:
+                number_of_pages = int(
+                    (
+                        item.find("div", {"class": "TruncatedContent"})
+                        .find("div", {"data-testid": "contentContainer"})
+                        .text.split(",")[0]
+                        .split(" ")[0]
+                    )
                 )
-            )
+            except ValueError:
+                print("Cannot retrieve page number")
         elif selector == "Published":
-            release_date = parser.parse(
-                " ".join(
-                    item.find("div", {"class": "TruncatedContent"})
-                    .find("div", {"data-testid": "contentContainer"})
-                    .text.split(" ")[:3]
+            try:
+                release_date = parser.parse(
+                    " ".join(
+                        item.find("div", {"class": "TruncatedContent"})
+                        .find("div", {"data-testid": "contentContainer"})
+                        .text.split(" ")[:3]
+                    )
                 )
-            )
+            except ValueError:
+                print("Cannot retrieve release date")
         elif selector == "ISBN":
             isbn = (
                 item.find("div", {"class": "TruncatedContent"})
