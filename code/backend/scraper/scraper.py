@@ -65,7 +65,7 @@ def extract_data(url):
 
     title = soup.find("h1", {"class": "Text__title1"}).text
     author = soup.find("span", {"class": "ContributorLink__name"}).text
-    rating = soup.find("div", {"class": "RatingStatistics__rating"}).text
+    rating = float(soup.find("div", {"class": "RatingStatistics__rating"}).text)
     summary = soup.find(
         "div", {"class": "DetailsLayoutRightParagraph__widthConstrained"}
     ).text.replace("\n", " ")
@@ -79,11 +79,13 @@ def extract_data(url):
     for item in soup.find_all("div", {"class": "DescListItem"})[-4:]:
         selector = item.find("dt").text
         if selector == "Format":
-            number_of_pages = (
-                item.find("div", {"class": "TruncatedContent"})
-                .find("div", {"data-testid": "contentContainer"})
-                .text.split(",")[0]
-                .split(" ")[0]
+            number_of_pages = int(
+                (
+                    item.find("div", {"class": "TruncatedContent"})
+                    .find("div", {"data-testid": "contentContainer"})
+                    .text.split(",")[0]
+                    .split(" ")[0]
+                )
             )
         elif selector == "Published":
             release_date = parser.parse(
