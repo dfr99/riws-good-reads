@@ -5,24 +5,30 @@ Spider code to crawl and scrape Good Reads books data
 
 # -*- coding: utf-8 -*-
 import os
-from dotenv import load_dotenv
 
-from scrapy.http import Response, Request
+from dotenv import load_dotenv
+from scrapy.http import Response
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-from scraper import scraper
 from good_reads.items import BookItem
+from scraper import scraper
 
 load_dotenv()
+
 
 class BookSpider(CrawlSpider):
     name = "good_reads"
     allowed_domains = ["goodreads.com"]
-    start_urls = [
-        os.getenv("GOOD_READS_LIST")
-    ]
-    rules = (Rule(LinkExtractor(allow="/book/show/.*"), callback="parse_book_details"),)
+    start_urls = ["https://www.goodreads.com/list/show/" + os.getenv("GOOD_READS_LIST")]
+    rules = (
+        Rule(LinkExtractor(allow="/book/show/.*"), callback="parse_book_details"),
+        Rule(
+            LinkExtractor(restrict_css="a.next_page"),
+            callback="parse_page",
+            follow=True,
+        ),
+    )
 
     @staticmethod
     def _extract_item(url) -> BookItem:
@@ -41,16 +47,17 @@ class BookSpider(CrawlSpider):
 
         return item
 
-
     def parse_book_details(self, response: Response):
-        self.logger.info("Scraping %s...", response.url)
+        self.logger.info("Scraping book %s...", response.url)
         self.logger.info(
             "User-Agent for this request: %s", response.request.headers["User-Agent"]
         )
-        # item = self._extract_item(response.url)
-        next_page_number = response.css('ul.pagination li.current + li a::text').extract_first()
-        print(next_page_number)
-        # if next_page_number:
-        #     next_page_url = f'http://example.com/page/{next_page_number}'
-        #     yield Request(url=next_page_url, callback=self.parse)
-        # yield item
+        item = self._extract_item(response.url)
+        yield item
+
+    def parse_page(self, response: Response):
+        self.logger.info("Scraping page %s...", response.url)
+        self.logger.info(
+            "User-Agent for this request: %s", response.request.headers["User-Agent"]
+        )
+        self.parse_book_details(response)
