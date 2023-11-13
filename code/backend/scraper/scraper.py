@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 # -*- coding: utf-8 -*-
 from dateutil import parser
+from dateutil.parser import ParserError
 from selenium import webdriver
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
@@ -68,7 +69,7 @@ def extract_data(url):
 
     try:
         rating = float(soup.find("div", {"class": "RatingStatistics__rating"}).text)
-    except ValueError:
+    except (ValueError, AttributeError):
         print("Cannot retrieve book rating")
 
     summary = soup.find(
@@ -93,7 +94,7 @@ def extract_data(url):
                         .split(" ")[0]
                     )
                 )
-            except ValueError:
+            except (ValueError, AttributeError):
                 print("Cannot retrieve page number")
         elif selector == "Published":
             try:
@@ -104,7 +105,7 @@ def extract_data(url):
                         .text.split(" ")[:3]
                     )
                 )
-            except ValueError:
+            except (ValueError, AttributeError, ParserError):
                 print("Cannot retrieve release date")
         elif selector == "ISBN":
             isbn = (
