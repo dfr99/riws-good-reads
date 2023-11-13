@@ -14,7 +14,7 @@ from scrapy.exporters import JsonLinesItemExporter
 
 class GoodReadsPipeline:
     def __init__(self):
-        self.es = Elasticsearch(hosts=["https://localhost:9200"])
+        self.es = Elasticsearch(hosts=["http://localhost:9200"])
         self.index_name = "good_reads"
 
     def open_spider(self, spider):
