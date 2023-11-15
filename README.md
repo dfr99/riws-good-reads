@@ -10,8 +10,9 @@ Práctica de web scraping de RIWS 2023
 	+ [Backend](#backend)
 	+ [Frontend](#frontend)
 - [Despliegue](#despliegue)
-	+ [Automático (solo en Linux)](#automático-solo-en-linux)
+	+ [Automático](#automático)
 	+ [Manual](#manual)
+- [Recomendaciones](#recomendaciones)
 - [Autores](#autores)
 - [Referencias](#referencias)
 
@@ -20,6 +21,8 @@ Práctica de web scraping de RIWS 2023
 El proyecto consiste en obtener los datos de los libros que aparcen en listas de [Good Reads](https://www.goodreads.com/) utilizando técnicas de _web scraping_. Estos datos son guardados en un índice de Elasticsearch, que es consultado por un _frontend_ para mostrar y manejar dichos datos.
 
 ## Dependencias
+
+El proyecto ha sido desarrollado en [Ubuntu 22.04](https://releases.ubuntu.com/jammy/). El software necesario ha sido instalado utilizando el repositorio de paquetes [APT](https://ubuntu.com/server/docs/package-management) o scripts de instalación escritos en [BASH](https://es.wikipedia.org/wiki/Bash). A continuación, se muestran las dependencias específicas para cada
 
 ### Backend
 
@@ -40,14 +43,15 @@ pip freeze
 
 ### Frontend
 
-
+// NPM, NODE, REACT, REACTIVESEARCH
 
 ## Despliegue
 
-### Automático (solo en Linux)
+### Automático
 El script de Bash [autoinstall.sh](dist/autoinstall.sh) realiza las siguientes acciones:
 
-- Instalación y comprobación de las [dependencias](#dependencias)
+- Instalación de Elasticsearch y Poetry
+- Comprobación de las [dependencias](#dependencias)
 - Modificación de la configuración de Elasticsearch para adecuarse al contexto de la práctica
 - Inicialización del servicio de Elastisearch
 - Creación del índice de Elasticsearch
@@ -63,11 +67,25 @@ cd dist
 
 ### Manual
 
-En caso de que el script de despliegue automático no funcione, se deben seguir los siguientes pasos de forma manual:
+En caso de que el script de despliegue automático no funcione, se pueden seguir los siguientes pasos de forma manual:
 
+- Actualizar los repositorios `apt` con el comando `sudo apt update`
 - Instalación de Elasticsearch
+	```bash
+	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+	sudo apt-get install -y apt-transport-https
+	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+	sudo apt-get update && sudo apt-get install -y elasticsearch
+	```
+- Inicialización de Elasticsearch
+	```bash
+	sudo systemctl daemon-reload
+	sudo systemctl enable elasticsearch
+	sudo systemctl start elasticsearch
+	sudo systemctl status elasticsearch
+	```
 - Configuración de Elasticsearch:
-	+ Introducir en el fichero de configuración de Elasticsearch 
+	+ Introducir en el fichero de configuración de Elasticsearch (en Ubuntu, en la ruta `/etc/elasticsearch/elasticsearch.yml`)
 		```yml
 		## Remove security
 		xpack.security.enabled: false
@@ -80,8 +98,48 @@ En caso de que el script de despliegue automático no funcione, se deben seguir 
 		http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-Length
 		http.cors.allow-credentials: true
 		```
+- Reinicio de Elasticsearch para aplicar los nuevos cambios en la configuración y comprobación de la instalación
+	```bash
+	sudo systemctl restart elasticsearch
+	curl -X GET 'http://localhost:9200'
+	```
+- Crear el índice en Elasticsearch
+	```bash
+	# Asegurarse de que no existe el índice que se va a utilizar
+	curl -X DELETE 'localhost:9200/good_reads?pretty'
+
+	# Creación del índice
+	curl -X PUT 'localhost:9200/good_reads?pretty'
+	```
 - Instalación de Poetry
-- Ejecutar los siguientes comandos
+	```bash
+	curl -sSL https://install.python-poetry.org | $1 -
+	poetry --version
+	```
+- Instalación de NPM
+	```bash
+	# MARIA TOCACHE AQUÍ DECIR COMO INSTALAR NODE E NPM, EU INSTALEINO ASÍ
+	sudo apt install nodejs
+	sudo apt install npm
+	node -v
+	npm -v
+	```
+- Ejecutar los siguientes comandos para lanzar el _crawler_ y levantar el frontal
+```bash
+cd code/backend
+poetry install
+poetry run crawl
+
+# Una vez termine el comando anterior
+cd ../frontend
+npm install
+npm start
+```
+
+## Recomendaciones
+
+- Se recomienda utilizar, para la ejecución de la práctica, un SO basado en Linux que utilice APT como gestor de paquetes y BASH como intérprete de comandos. Concretamente, Ubuntu en su versión 22.04.
+- Como primera opción, lanzar el [despliegue autómatico](#automatico). Recurrir a la [instalación manual](#manual) solo en caso de error.
 
 ## Autores
 
