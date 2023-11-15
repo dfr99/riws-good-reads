@@ -55,8 +55,15 @@ pip freeze
 ```
 
 ### Frontend
+Las dependencias del _frontend_ son las siguientes:
 
-// NPM, NODE, REACT, REACTIVESEARCH
+* [React 17.0.2](https://python-poetry.org/docs/)
+* [ReactiveSearch 3.45](https://github.com/facebook/react/blob/main/CHANGELOG.md#1702-march-22-2021)
+* [Node v10.19.0](https://nodejs.org/en/blog/release/v10.19.0)
+* [Npm 6.14.4](https://www.npmjs.com/package/npm/v/6.14.4)
+
+Dentro de la carpeta [code/frontend/package.json](code/frontend/package.json),
+se encuentran algunas de las dependencias mencionadas anteriormente.
 
 ## Despliegue
 
@@ -169,6 +176,9 @@ seguir los siguientes pasos de forma manual:
     npm install
     npm start
     ```
+* En caso de error o conflicto con el npm install, borrar el
+  archivo [code/frontend/package-lock.json](code/frontend/package-lock.json),
+  y ejecutar otra vez el comando
 
 ## Recomendaciones
 
