@@ -57,13 +57,14 @@ pip freeze
 ### Frontend
 Las dependencias del _frontend_ son las siguientes:
 
-* [React 17.0.2](https://python-poetry.org/docs/)
-* [ReactiveSearch 3.45](https://github.com/facebook/react/blob/main/CHANGELOG.md#1702-march-22-2021)
-* [Node v10.19.0](https://nodejs.org/en/blog/release/v10.19.0)
-* [Npm 6.14.4](https://www.npmjs.com/package/npm/v/6.14.4)
+* [React 17.0.2](https://github.com/facebook/react/blob/main/CHANGELOG.md#1702-march-22-2021)
+* [ReactiveSearch 3.45](https://github.com/appbaseio/reactivesearch/releases/tag/v3.45.0)
+* [Node v12.22.9](https://nodejs.org/en/blog/release/v12.22.9): utilizamos esta versión de Node por compatibilidad con
+  ReactiveSearch
+* [npm 8.5.1](https://www.npmjs.com/package/npm/v/8.5.1)
 
 Dentro de la carpeta [code/frontend/package.json](code/frontend/package.json),
-se encuentran algunas de las dependencias mencionadas anteriormente.
+se encuentran definidas las dependencias mencionadas anteriormente.
 
 ## Despliegue
 
@@ -91,10 +92,10 @@ cd dist
 siendo _python_executable_path_ la ruta donde se encuentra el ejecutable de
 Python (e.g python, python3, /usr/bin/python) y _good_reads_list_ la lista de
 Good Reads de la que se desean extraer los datos. Este último se extrae de la
-URL de la lista. Tomando como ejemplo
-https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels, el
-valor del parámetro sería **3116.Best_historical_fiction_novels**. Esto es
-aplicable a todas las listas de Good Reads.
+URL de la lista. Tomando como ejemplo este
+[enlace](https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels)
+, el valor del parámetro sería **3116.Best_historical_fiction_novels**.
+Esto es aplicable a todas las listas de Good Reads.
 
 ### Manual
 
@@ -162,11 +163,10 @@ seguir los siguientes pasos de forma manual:
     poetry --version
     ```
 
-* Instalación de NPM
+* Instalación de Node y npm
 
     ```bash
-    # MARIA TOCACHE AQUÍ DECIR COMO INSTALAR NODE E NPM, EU INSTALEINO ASÍ
-    sudo apt install nodejs
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     sudo apt install npm
     node -v
     npm -v
@@ -177,9 +177,9 @@ entorno `GOOD_READS_LIST` con en nombre de la lista de la que se deseen extraer
 los datos de los libros. Alternativamente, se puede hacer usando el CLI con el
 siguiente comando:
 
-```bash
-echo 'GOOD_READS_LIST=<good_reads_list>' > code/backend/good_reads/spiders/.env
-```
+    ```bash
+    echo 'GOOD_READS_LIST=<good_reads_list>' > code/backend/good_reads/spiders/.env
+    ```
 
 * Ejecutar los siguientes comandos para lanzar el _crawler_ y levantar el frontal
 

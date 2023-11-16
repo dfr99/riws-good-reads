@@ -4,7 +4,7 @@
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 sudo apt-get install -y apt-transport-https
 echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
-sudo apt-get update && sudo apt-get install -y elasticsearch
+sudo apt-get update && sudo apt-get install -y elasticsearch=8.11.1
 
 ## Check Python version
 which $1
@@ -12,7 +12,14 @@ $1 -V
 
 ## Install Poetry
 curl -sSL https://install.python-poetry.org | $1 -
+poetry self update 1.7.0
 poetry --version
+
+## Install Node and NPM
+sudo apt install nodejs
+sudo apt install npm
+node -v
+npm -v
 
 ## Start Elasticsearch
 sudo systemctl daemon-reload
