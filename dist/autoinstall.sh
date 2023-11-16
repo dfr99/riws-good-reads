@@ -111,6 +111,7 @@ curl -X PUT 'localhost:9200/good_reads?pretty'
 
 ## Run good_reads crawler
 cd ../code/backend
+echo 'GOOD_READS_LIST='${2} > ./good_reads/spiders/.env
 poetry install
 poetry run crawl
 
