@@ -78,8 +78,16 @@ comandos:
 
 ```bash
 cd dist
-./autoinstall.sh <python_executable_path> #e.g python,python3,/usr/bin/python
+./autoinstall.sh <python_executable_path> <good_reads_list>
 ```
+
+siendo _python_executable_path_ la ruta donde se encuentra el ejecutable de
+Python (e.g python, python3, /usr/bin/python) y _good_reads_list_ la lista de
+Good Reads de la que se desean extraer los datos. Este último se extrae de la
+URL de la lista. Tomando como ejemplo
+https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels, el
+valor del parámetro sería **3116.Best_historical_fiction_novels**. Esto es
+aplicable a todas las listas de Good Reads.
 
 ### Manual
 
@@ -143,7 +151,7 @@ seguir los siguientes pasos de forma manual:
 * Instalación de Poetry
 
     ```bash
-    curl -sSL https://install.python-poetry.org | $1 -
+    curl -sSL https://install.python-poetry.org | python -
     poetry --version
     ```
 
@@ -156,6 +164,15 @@ seguir los siguientes pasos de forma manual:
     node -v
     npm -v
     ```
+
+* En el fichero `code/backend/good_reads/spiders/.env`, modificar la variable de
+entorno `GOOD_READS_LIST` con en nombre de la lista de la que se deseen extraer
+los datos de los libros. Alternativamente, se puede hacer usando el CLI con el
+siguiente comando:
+
+```bash
+echo 'GOOD_READS_LIST=<good_reads_list>' > code/backend/good_reads/spiders/.env
+```
 
 * Ejecutar los siguientes comandos para lanzar el _crawler_ y levantar el frontal
 
