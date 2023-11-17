@@ -34,6 +34,21 @@ instalación escritos en [BASH](https://es.wikipedia.org/wiki/Bash).
 A continuación, se muestran las dependencias específicas para cada parte
 del proyecto.
 
+Adicionalmente, para el despliegue de la aplicación se requieren de los
+siguientes paquetes:
+
+* [wget](https://www.hostinger.es/tutoriales/usar-comando-wget/)
+* [cURL](https://curl.se/)
+* [apt-transport-https](https://manpages.ubuntu.com/manpages/focal/en/man1/apt-transport-https.1.html)
+* [gpg](https://www.gnupg.org/)
+
+Para instalarlos, simplemente ejecutando:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y apt-transport-https curl wget gpg
+```
+
 ### Backend
 
 Las dependencias del _backend_ son las siguientes:
