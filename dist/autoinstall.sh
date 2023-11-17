@@ -7,8 +7,18 @@ echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://arti
 sudo apt-get update && sudo apt-get install -y elasticsearch=8.11.1
 
 ## Check Python version
-which $1
-$1 -V
+if ! command -v ${1} &> /dev/null
+then
+	echo "Python executable could not be found"
+	exit 1
+fi
+
+## Check if Chrome is installed
+if ! command -v google-chrome &> /dev/null
+then
+	echo "Google Chrome could not be found"
+	exit 1
+fi
 
 ## Install Poetry
 curl -sSL https://install.python-poetry.org | $1 -

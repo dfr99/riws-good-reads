@@ -109,6 +109,8 @@ Esto es aplicable a todas las listas de Good Reads.
 En caso de que el script de despliegue automático no funcione, se pueden
 seguir los siguientes pasos de forma manual:
 
+* [Instalación de Google Chrome](https://www.google.com/intl/es_es/chrome/)
+
 * Actualizar los repositorios `apt` con el comando `sudo apt update`
 * Instalación de Elasticsearch
 
