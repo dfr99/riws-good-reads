@@ -39,8 +39,14 @@ del proyecto.
 Las dependencias del _backend_ son las siguientes:
 
 * [Python 3.10.12](https://www.python.org/downloads/release/python-31012/)
-* [Poetry 1.7.0](https://python-poetry.org/docs/)
+* [Poetry 1.7.0](https://github.com/python-poetry/poetry/releases/tag/1.7.0)
 * [Elasticsearch 8.11.1](https://github.com/elastic/elasticsearch/releases/tag/v8.11.1)
+* Adicionalmente, se requiere de
+[ChromeDriver](https://chromedriver.chromium.org/), ya que es el
+navegador utilizado por la librería Selenium para interactuar con las páginas
+web. Se recomienda instalar
+[Google Chrome](https://www.google.com/intl/es_es/chrome/) ya que el _driver_
+se instala con dicho navegador.
 
 Dentro del fichero [code/backend/pyproject.toml](code/backend/pyproject.toml),
 en la sección _tool.poetry.dependencies_, se listan las dependencias del
@@ -64,7 +70,8 @@ Las dependencias del _frontend_ son las siguientes:
 * [npm 8.5.1](https://www.npmjs.com/package/npm/v/8.5.1)
 
 Dentro de la carpeta [code/frontend/package.json](code/frontend/package.json),
-se encuentran definidas las dependencias mencionadas anteriormente.
+se encuentran definidas las dependencias mencionadas anteriormente, así como
+otras librerías requeridas en el proyecto.
 
 ## Despliegue
 
@@ -91,8 +98,8 @@ cd dist
 
 siendo _python_executable_path_ la ruta donde se encuentra el ejecutable de
 Python (e.g python, python3, /usr/bin/python) y _good_reads_list_ la lista de
-Good Reads de la que se desean extraer los datos. Este último se extrae de la
-URL de la lista. Tomando como ejemplo este
+Good Reads de la que se desean extraer los datos. Este último parámetro se
+extrae de la URL de la lista. Tomando como ejemplo este
 [enlace](https://www.goodreads.com/list/show/3116.Best_historical_fiction_novels)
 , el valor del parámetro sería **3116.Best_historical_fiction_novels**.
 Esto es aplicable a todas las listas de Good Reads.
@@ -160,12 +167,17 @@ seguir los siguientes pasos de forma manual:
 
     ```bash
     curl -sSL https://install.python-poetry.org | python -
+    poetry self update 1.7.0
     poetry --version
     ```
 
 * Instalación de Node y npm
 
     ```bash
+    # Si se utiliza Ubuntu 22.04, en los repositorios apt, la última version
+    # disponible es la v12.29.9, válida para este proyecto
+    sudo apt install nodejs
+    # En otro caso, instalar Node utilizando el script de instalación
     curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
     sudo apt install npm
     node -v
@@ -193,15 +205,12 @@ siguiente comando:
     npm install
     npm start
     ```
-* En caso de error o conflicto con el npm install, borrar el
-  archivo [code/frontend/package-lock.json](code/frontend/package-lock.json),
-  y ejecutar otra vez el comando
 
 ## Recomendaciones
 
 * Se recomienda utilizar, para la ejecución de la práctica, un SO basado en
   Linux que utilice APT como gestor de paquetes y BASH como intérprete de
-  comandos. Concretamente, Ubuntu en su versión 22.04.
+  comandos. Concretamente, se aconseja utilizar Ubuntu 22.04.
 * Como primera opción, lanzar el [despliegue autómatico](#automatico).
   Recurrir a la [instalación manual](#manual) solo en caso de error.
 
